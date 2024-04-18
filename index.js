@@ -1,11 +1,15 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const bodyParser = require("body-parser");
+
 const mongoose = require("mongoose");
 require("dotenv").config();
 
 app.use(cors());
 app.use(express.static("public"));
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/views/index.html");
 });
@@ -40,12 +44,6 @@ const exerciseSchema = new mongoose.Schema({
 
 const Exercise = mongoose.model("Exercise", exerciseSchema);
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
-app.use(express.static("public"));
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/views/index.html");
-});
 
 //POST_USER
 app.post("/api/users", (req, res) => {
